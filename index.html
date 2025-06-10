@@ -29,11 +29,16 @@
   <button onclick="updateVar('pickpocket', -1)">-</button>
 </div>
 
-<div class="var">
-  Money Multiplier: <span id="moneymultValue" class="value">1.5</span>
-  <button onclick="updateVar('moneymult', 1)">+</button>
-  <button onclick="updateVar('moneymult', -1)">-</button>
-</div>
+  <div class="var">
+    Money Multiplier: <span id="moneymultValue" class="value">1.5</span>
+    <button onclick="updateVar('moneymult', 1)">+</button>
+    <button onclick="updateVar('moneymult', -1)">-</button>
+  </div>
+
+  <div class="var">
+    Combined (Pickpocket * Money Multiplier):
+    <span id="combinedValue" class="value">3.0</span>
+  </div>
 
 <script>
   let points = 0;
@@ -66,8 +71,11 @@
 
   function updateDisplay() {
     document.getElementById('pointsDisplay').textContent = points;
-    document.getElementById('pickpocketValue').textContent = (2 + 0.3 * pickpocketPts).toFixed(1);
-    document.getElementById('moneymultValue').textContent = (1.5 + 0.5 * moneymultPts).toFixed(1);
+    const pick = 2 + 0.3 * pickpocketPts;
+    const mult = 1.5 + 0.5 * moneymultPts;
+    document.getElementById('pickpocketValue').textContent = pick.toFixed(1);
+    document.getElementById('moneymultValue').textContent = mult.toFixed(1);
+    document.getElementById('combinedValue').textContent = (pick * mult).toFixed(1);
   }
 
   updateDisplay();
