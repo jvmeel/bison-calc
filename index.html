@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Variable Allocator</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 2em; }
+  .var { margin-bottom: 1em; }
+  .value { font-weight: bold; margin: 0 1em; }
+  button { width: 2em; }
+</style>
+</head>
+<body>
+<h1>Variable Allocator</h1>
+
+<div class="var">
+  Starting Points:
+  <input type="number" id="startingPoints" value="0" min="0">
+  <button onclick="setPoints()">Set Points</button>
+</div>
+
+<div class="var">
+  Available Points: <span id="pointsDisplay">0</span>
+</div>
+
+<div class="var">
+  Pickpocket: <span id="pickpocketValue" class="value">2.0</span>
+  <button onclick="updateVar('pickpocket', 1)">+</button>
+  <button onclick="updateVar('pickpocket', -1)">-</button>
+</div>
+
+<div class="var">
+  Money Multiplier: <span id="moneymultValue" class="value">1.5</span>
+  <button onclick="updateVar('moneymult', 1)">+</button>
+  <button onclick="updateVar('moneymult', -1)">-</button>
+</div>
+
+<script>
+  let points = 0;
+  let pickpocketPts = 0;
+  let moneymultPts = 0;
+
+  function setPoints() {
+    points = parseInt(document.getElementById('startingPoints').value, 10) || 0;
+    pickpocketPts = 0;
+    moneymultPts = 0;
+    updateDisplay();
+  }
+
+  function updateVar(variable, delta) {
+    if (delta === 1 && points > 0) {
+      points--;
+      if (variable === 'pickpocket') pickpocketPts++;
+      if (variable === 'moneymult') moneymultPts++;
+    } else if (delta === -1) {
+      if (variable === 'pickpocket' && pickpocketPts > 0) {
+        pickpocketPts--;
+        points++;
+      } else if (variable === 'moneymult' && moneymultPts > 0) {
+        moneymultPts--;
+        points++;
+      }
+    }
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    document.getElementById('pointsDisplay').textContent = points;
+    document.getElementById('pickpocketValue').textContent = (2 + 0.3 * pickpocketPts).toFixed(1);
+    document.getElementById('moneymultValue').textContent = (1.5 + 0.5 * moneymultPts).toFixed(1);
+  }
+
+  updateDisplay();
+</script>
+</body>
+</html>
